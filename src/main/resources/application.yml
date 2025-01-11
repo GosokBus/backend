@@ -1,1 +1,7 @@
-spring.application.name=demo
+spring:
+  # DB ?? ?? ??
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/dohands
+    username: root
+    password: js365@dwy5
