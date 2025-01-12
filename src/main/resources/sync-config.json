@@ -1,0 +1,22 @@
+{
+  "sheets": [
+    {
+      "spreadsheetId": "1TKfJWX6l2ql2ReHfXYdbp5AXto2eGrTTarCxHW9LniY",
+      "ranges": [
+        {
+          "range": "구성원정보!B9:J16",
+          "collectionName": "userInfo"
+        }
+      ]
+    },
+    {
+      "spreadsheetId": "1TKfJWX6l2ql2ReHfXYdbp5AXto2eGrTTarCxHW9LniY",
+      "ranges": [
+        {
+          "range": "인사평가!B9:F34",
+          "collectionName": "firstPersonnelEvaluation"
+        }
+      ]
+    }
+  ]
+}

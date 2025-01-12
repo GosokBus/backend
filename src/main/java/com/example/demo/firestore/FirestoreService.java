@@ -16,13 +16,18 @@ public class FirestoreService {
         this.firestore = firestore;
     }
 
+    //
     public void saveToFirestore(String collectionName, List<List<Object>> data) {
-        for (int i = 0; i < data.size(); i++) {
+
+        // 첫 번째 행을 키로 사용 (헤더)
+        List<Object> headers = data.getFirst();
+
+        for (int i = 1; i < data.size(); i++) {
             List<Object> row = data.get(i);
             Map<String, Object> documentData = new HashMap<>();
 
             for (int j = 0; j < row.size(); j++) {
-                documentData.put("column" + j, row.get(j));
+                documentData.put(headers.get(j).toString(), row.get(j));
             }
 
             firestore.collection(collectionName)
