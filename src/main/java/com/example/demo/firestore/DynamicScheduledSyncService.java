@@ -21,7 +21,7 @@ public class DynamicScheduledSyncService {
         this.syncService = syncService;
     }
 
-    @Scheduled(fixedRate = 10000) // 6초 간격으로 실행
+    @Scheduled(fixedRate = 20000) // 6초 간격으로 실행
     public void syncMultipleRanges() {
         try {
             // JSON 파일에서 설정 로드

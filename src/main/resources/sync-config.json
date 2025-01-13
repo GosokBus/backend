@@ -17,6 +17,78 @@
           "collectionName": "firstPersonnelEvaluation"
         }
       ]
+    },
+    {
+      "spreadsheetId": "1TKfJWX6l2ql2ReHfXYdbp5AXto2eGrTTarCxHW9LniY",
+      "ranges": [
+        {
+          "range": "인사평가!H9:K16",
+          "collectionName": "secondPersonnelEvaluation"
+        }
+      ]
+    },
+    {
+      "spreadsheetId": "1TKfJWX6l2ql2ReHfXYdbp5AXto2eGrTTarCxHW9LniY",
+      "ranges": [
+        {
+          "range": "음성1센터1그룹-직무별퀘스트!B13:D65",
+          "collectionName": "1center1group-groupQuestEXP"
+        }
+      ]
+    },
+    {
+      "spreadsheetId": "1TKfJWX6l2ql2ReHfXYdbp5AXto2eGrTTarCxHW9LniY",
+      "ranges": [
+        {
+          "range": "음성1센터2그룹-직무별퀘스트!B13:D65",
+          "collectionName": "1center2group-groupQuestEXP"
+        }
+      ]
+    },
+    {
+      "spreadsheetId": "1TKfJWX6l2ql2ReHfXYdbp5AXto2eGrTTarCxHW9LniY",
+      "ranges": [
+        {
+          "range": "음성1센터-리더부여퀘스트!B9:I50",
+          "collectionName": "1center-leaderQuestEXP"
+        }
+      ]
+    },
+    {
+      "spreadsheetId": "1TKfJWX6l2ql2ReHfXYdbp5AXto2eGrTTarCxHW9LniY",
+      "ranges": [
+        {
+          "range": "음성2센터-리더부여퀘스트!B9:I50",
+          "collectionName": "2center-leaderQuestEXP"
+        }
+      ]
+    },
+    {
+      "spreadsheetId": "1TKfJWX6l2ql2ReHfXYdbp5AXto2eGrTTarCxHW9LniY",
+      "ranges": [
+        {
+          "range": "전사프로젝트!B7:H12",
+          "collectionName": "companyProject!B7:H12"
+        }
+      ]
+    },
+    {
+      "spreadsheetId": "1TKfJWX6l2ql2ReHfXYdbp5AXto2eGrTTarCxHW9LniY",
+      "ranges": [
+        {
+          "range": "게시판!B6:D11",
+          "collectionName": "board"
+        }
+      ]
+    },
+    {
+      "spreadsheetId": "1TKfJWX6l2ql2ReHfXYdbp5AXto2eGrTTarCxHW9LniY",
+      "ranges": [
+        {
+          "range": "올해경험치!B25:L51",
+          "collectionName": "EXP2024"
+        }
+      ]
     }
   ]
 }
