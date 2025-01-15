@@ -10,7 +10,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class UserInfo {
 
-    @DocumentId
+    //@DocumentId
     private String 사번;
     private String 이름;
     private String 입사일;
