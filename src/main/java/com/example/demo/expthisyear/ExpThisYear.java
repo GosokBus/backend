@@ -16,7 +16,7 @@ public class ExpThisYear {
     private String userId;
 
     @PropertyName("2024년 획득한 총 경험치")
-    private String exp;
+    private String expThisYear;
     @PropertyName("레벨")
     private String level;
     @PropertyName("리더부여 퀘스트")
@@ -26,7 +26,7 @@ public class ExpThisYear {
     @PropertyName("소속")
     private String part;
     @PropertyName("이름")
-    private String name;
+    private String userName;
     @PropertyName("전사 프로젝트")
     private String cProject;
     @PropertyName("직무그룹")

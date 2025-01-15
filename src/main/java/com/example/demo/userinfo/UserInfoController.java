@@ -28,9 +28,9 @@ public class UserInfoController {
         }
 
         // userInfo.get레벨()은 Level Enum 타입
-        if (userInfo.get레벨() != null) {
-            System.out.println("Level (Firestore Value): " + userInfo.get레벨().getFirestoreValue());
-            System.out.println("Level (Enum Name): " + userInfo.get레벨().name());
+        if (userInfo.getLevel() != null) {
+            System.out.println("Level (Firestore Value): " + userInfo.getLevel().getFirestoreValue());
+            System.out.println("Level (Enum Name): " + userInfo.getLevel().name());
         }
 
         return ResponseEntity.ok(userInfo);

@@ -15,6 +15,20 @@ public class ExpThisYearController {
     @Autowired
     private ExpThisYearService expThisYearService;
 
+    //올해 획득한 경험치량 반환
+    @GetMapping("/{userId}/thisyear")
+    public ResponseEntity<String> getExpThisYear(@PathVariable String userId) {
+        try {
+            String expThisYear = expThisYearService.getExpThisYear(userId);
+            if (expThisYear == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            }
+            return ResponseEntity.ok(expThisYear);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+    //전체 획득한 경험치량 반환
     @GetMapping("/{userId}/total")
     public ResponseEntity<String> getTotalExpThisYear(@PathVariable String userId) {
         try {

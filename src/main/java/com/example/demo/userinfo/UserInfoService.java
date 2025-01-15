@@ -26,6 +26,6 @@ public class UserInfoService {
         if (userInfo == null) {
             throw new Exception("User not found");
         }
-        return userInfo.get총경험치();
+        return userInfo.getExpInHave();
     }
 }

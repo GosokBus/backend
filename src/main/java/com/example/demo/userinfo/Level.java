@@ -57,6 +57,7 @@ public enum Level {
                 return level;
             }
         }
+        System.err.println("Invalid firestoreValue for Level: " + firestoreValue); // 로그 추가
         return null;
     }
 }
