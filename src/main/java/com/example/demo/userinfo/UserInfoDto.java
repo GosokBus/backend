@@ -27,15 +27,18 @@ public class UserInfoDto {
         this.총경험치 = userInfo.get총경험치();
 
         if (userInfo.get레벨() != null) {
-            Level levelEnum = Level.fromFirestoreValue(userInfo.get레벨());
+            Level levelEnum = Level.fromFirestoreValue(String.valueOf(userInfo.get레벨()));
 
             if (levelEnum != null) {
-                this.레벨 = levelEnum.getFirestoreValue(); // Firestore Value (예: "F1-I") 저장
+                this.레벨 = levelEnum.getFirestoreValue();
             } else {
                 // Level Enum에 정의되지 않은 값이 들어온 경우 처리
                 System.err.println("Invalid Level value: " + userInfo.get레벨());
                 this.레벨 = null; // 또는 기본값 설정
             }
+        } else {
+            // userInfo.get레벨()이 null인 경우 처리
+            this.레벨 = null; // 또는 기본값 설정
         }
     }
 }

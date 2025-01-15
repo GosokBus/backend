@@ -1,17 +1,19 @@
 package com.example.demo.userinfo;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+
 public enum Level {
-    F1_I(0, "F1-I"),
-    F1_II(13500, "F1-II"),
-    F2_I(27000, "F2-I"),
-    F2_II(39000, "F2-II"),
-    F2_III(51000, "F2-III"),
-    F3_I(63000, "F3-I"),
-    F3_II(78000, "F3-II"),
-    F3_III(93000, "F3-III"),
-    F4_I(108000, "F4-I"),
-    F4_II(126000, "F4-II"),
-    F4_III(144000, "F4-III"),
+    F1_I(0, "F1-Ⅰ"),
+    F1_II(13500, "F1-Ⅱ"),
+    F2_I(27000, "F2-Ⅰ"),
+    F2_II(39000, "F2-Ⅱ"),
+    F2_III(51000, "F2-Ⅲ"),
+    F3_I(63000, "F3-Ⅰ"),
+    F3_II(78000, "F3-Ⅱ"),
+    F3_III(93000, "F3-Ⅲ"),
+    F4_I(108000, "F4-Ⅰ"),
+    F4_II(126000, "F4-Ⅱ"),
+    F4_III(144000, "F4-Ⅲ"),
     F5(162000, "F5"),
     B1(0, "B1"),
     B2(24000, "B2"),
@@ -44,6 +46,7 @@ public enum Level {
         return requiredExp;
     }
 
+    @JsonValue
     public String getFirestoreValue() {
         return firestoreValue;
     }

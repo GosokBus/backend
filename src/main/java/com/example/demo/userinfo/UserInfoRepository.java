@@ -25,10 +25,20 @@ public class UserInfoRepository {
         DocumentSnapshot document = future.get();
 
         if (document.exists()) {
-            return document.toObject(UserInfo.class); // UserInfo.class로 변경
+            UserInfo userInfo = new UserInfo();
+            userInfo.set사번(document.getId());
+            userInfo.set이름(document.getString("이름"));
+            userInfo.set입사일(document.getString("입사일"));
+            userInfo.set소속(document.getString("소속"));
+            userInfo.set직무그룹(document.getString("직무그룹"));
+            userInfo.set레벨(Level.fromFirestoreValue(document.getString("레벨"))); // Firestore 값을 Level Enum으로 변환
+            userInfo.set아이디(document.getString("아이디"));
+            userInfo.set기본패스워드(document.getString("기본패스워드"));
+            userInfo.set총경험치(document.getString("총경험치"));
+
+            return userInfo;
         } else {
             return null;
         }
     }
-
 }
