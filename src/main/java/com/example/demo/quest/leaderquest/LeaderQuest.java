@@ -1,4 +1,4 @@
-package com.example.demo.leaderquest;
+package com.example.demo.quest.leaderquest;
 
 import com.google.cloud.firestore.annotation.DocumentId;
 import com.google.cloud.firestore.annotation.PropertyName;

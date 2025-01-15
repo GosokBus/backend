@@ -1,4 +1,4 @@
-package com.example.demo.leaderquest;
+package com.example.demo.quest.leaderquest;
 
 import lombok.Getter;
 
