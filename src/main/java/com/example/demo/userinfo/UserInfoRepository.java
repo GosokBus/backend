@@ -1,10 +1,8 @@
 package com.example.demo.userinfo;
 
-import com.google.cloud.firestore.Firestore;
+import com.google.cloud.firestore.*;
 import org.springframework.stereotype.Repository;
 import com.google.api.core.ApiFuture;
-import com.google.cloud.firestore.DocumentReference;
-import com.google.cloud.firestore.DocumentSnapshot;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.concurrent.ExecutionException;
@@ -38,6 +36,21 @@ public class UserInfoRepository {
             userInfo.setExpInHave(document.getString("총경험치"));
 
             return userInfo;
+        } else {
+            return null;
+        }
+    }
+
+    public UserInfo findByLoginId(String loginId) throws ExecutionException, InterruptedException {
+
+        Query query = firestore.collection("userInfo").whereEqualTo("loginId", loginId);
+
+        ApiFuture<QuerySnapshot> querySnapshot = query.get();
+
+
+        if (!querySnapshot.get().isEmpty()) {
+            DocumentSnapshot document = querySnapshot.get().getDocuments().get(0);
+            return document.toObject(UserInfo.class);
         } else {
             return null;
         }

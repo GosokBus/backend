@@ -7,3 +7,10 @@ google:
     sheets:
       credentials-file: /Users/un6unw/Desktop/backend/src/main/resources/gosokbus-2c0f02299f05.json
       spreadsheet-id: 1TKfJWX6l2ql2ReHfXYdbp5AXto2eGrTTarCxHW9LniY
+
+
+
+jwt:
+  secret: ${JWT_SECRET_KEY}  # 환경 변수에서 가져옴
+  access-token-validity-in-ms: 1800000    # 30분
+  refresh-token-validity-in-ms: 604800000  # 7일
