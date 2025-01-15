@@ -28,4 +28,19 @@ public class UserInfoService {
         }
         return userInfo.getExpInHave();
     }
+
+    //유저 부서 정보 불러오기
+    public Department getDepartById(String userId) throws Exception {
+        UserInfo userInfo = userInfoRepository.findById(userId);
+        if (userInfo == null) {
+            throw new Exception("User not found");
+        }
+
+        Department department = Department.fromName(userInfo.getPart());
+        if (department == null) {
+            throw new Exception("Department not found for the user");
+        }
+
+        return department;
+    }
 }

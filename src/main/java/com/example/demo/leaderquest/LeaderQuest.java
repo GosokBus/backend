@@ -22,10 +22,11 @@ public class LeaderQuest {
     @PropertyName("달성내용")
     private String achievement;
     @PropertyName("부여 경험치")
-    private String
+    private String rewardExp;
     @PropertyName("비고")
-
+    private String note;
     @PropertyName("월")
-
+    private String month;
     @PropertyName("주")
+    private String week;
 }

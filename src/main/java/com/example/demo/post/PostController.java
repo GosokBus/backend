@@ -48,8 +48,8 @@ public class PostController {
         }
 
         // 번호는 변경할 수 없으므로, 제목과 글만 업데이트
-        existingPost.set제목(updatedPost.get제목());
-        existingPost.set글(updatedPost.get글());
+        existingPost.setTitle(updatedPost.getTitle());
+        existingPost.setContent(updatedPost.getContent());
 
         postService.updatePost(number, existingPost);
         return ResponseEntity.ok().build();

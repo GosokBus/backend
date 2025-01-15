@@ -1,31 +1,35 @@
 package com.example.demo.userinfo;
 
-import java.util.Arrays;
-
+import lombok.Getter;
+@Getter
 public enum Department {
-    EUMSUNG_1("음성 1센터"),
-    EUMSUNG_2("음성 2센터"),
-    YONGIN("용인백암센터"),
-    NAMYANGJU("남양주센터"),
-    PAJU("파주센터"),
-    BUSINESS_PLANNING("사업기획팀"),
-    GROWTH("그로스팀"),
-    CX("CX팀");
+
+    EUMSUNG_1_1("음성 1센터", "음성1센터-리더부여퀘스트","음성1센터1그룹-직무별퀘스트"),
+    EUMSUNG_1_2("음성 1센터", "음성1센터-리더부여퀘스트","음성1센터2그룹-직무별퀘스트"),
+    EUMSUNG_2("음성 2센터", "음성2센터-리더부여퀘스트", "음성2센터-직무별퀘스트"),
+    YONGIN("용인백암센터", "용인백암센터-리더부여퀘스트", "용인백암센터-직무별퀘스트"),
+    NAMYANGJU("남양주센터", "남양주센터-리더부여퀘스트", "남양주센터-직무별퀘스트"),
+    PAJU("파주센터", "파주센터-리더부여퀘스트", "파주센터-직무별퀘스트"),
+    BUSINESS_PLANNING("사업기획팀", "사업기획팀-리더부여퀘스트", "사업기획팀-직무별퀘스트"),
+    GROWTH("그로스팀", "그로스팀-리더부여퀘스트", "그로스팀-직무별퀘스트"),
+    CX("CX팀", "CX팀-리더부여퀘스트", "CX팀-직무별퀘스트");
 
     private final String name;
+    private final String leaderQuest;
+    private final String pratQuest;
 
-    Department(String name) {
+    Department(String name, String leaderQuest, String pratQuest) {
         this.name = name;
+        this.leaderQuest = leaderQuest;
+        this.pratQuest = pratQuest;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public static Department of(String name) {
-        return Arrays.stream(values())
-                .filter(department -> department.getName().equals(name))
-                .findFirst()
-                .orElse(null); // 또는 예외를 던지도록 수정
+    public static Department fromName(String name) {
+        for (Department dept : Department.values()) {
+            if (dept.getName().equals(name)) {
+                return dept;
+            }
+        }
+        return null; // 또는 예외 처리
     }
 }

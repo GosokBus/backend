@@ -38,7 +38,7 @@ public class PostService {
             }
 
             String id = String.valueOf(newNumber);
-            post.set번호(id);
+            post.setId(id);
             DocumentReference postRef = firestore.collection("post").document(id);
             transaction.set(postRef, post);
             return id;
@@ -86,7 +86,7 @@ public class PostService {
         DocumentReference docRef = firestore.collection("post").document(number);
 
         // 번호를 제외한 필드만 업데이트
-        docRef.update("제목", post.get제목(), "글", post.get글());
+        docRef.update("제목", post.getTitle(), "글", post.getContent());
     }
 
     // 게시글 삭제

@@ -19,6 +19,7 @@ public class UserInfoRepository {
         this.firestore = firestore;
     }
 
+    //유저 전체 정보 조회
     public UserInfo findById(String userId) throws ExecutionException, InterruptedException {
         DocumentReference docRef = firestore.collection("userInfo").document(userId);
         ApiFuture<DocumentSnapshot> future = docRef.get();
