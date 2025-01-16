@@ -14,7 +14,7 @@ public class FirebaseConfig {
     @PostConstruct
     public void firestore() throws IOException {
         FileInputStream serviceAccount =
-                new FileInputStream("/Users/un6unw/Desktop/backend/src/main/resources/gosock-bus-firebase-adminsdk-mi0c1-269c27d623.json");
+                new FileInputStream("/Users/imjaehyeon/Desktop/3-2/spring/blaybus/GosokbusCRUD4/src/main/resources/gosock-bus-firebase-adminsdk-mi0c1-269c27d623.json");
 
         FirebaseOptions options = new FirebaseOptions.Builder()
                 .setCredentials(GoogleCredentials.fromStream(serviceAccount))

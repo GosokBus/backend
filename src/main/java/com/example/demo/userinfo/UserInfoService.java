@@ -43,4 +43,12 @@ public class UserInfoService {
 
         return department;
     }
+
+    public UserInfo findByLoginId(String loginId) throws ExecutionException, InterruptedException {
+        UserInfo userInfo = userInfoRepository.findByLoginId(loginId);
+        if (userInfo == null) {
+            return null; // 또는 예외 처리
+        }
+        return userInfo;
+    }
 }
