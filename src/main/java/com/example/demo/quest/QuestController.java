@@ -58,18 +58,12 @@ public class QuestController {
     }
 
     // 리더부여 퀘스트 중 "월특근" 퀘스트 정보 목록 조회
-    @GetMapping("/{userId}/leader/monthly")
-    public ResponseEntity<List<LeaderQuestCalendarResponse>> getMonthlyQuestInfo(@PathVariable String userId) throws Exception {
-        List<LeaderQuestCalendarResponse> response = leaderQuestService.getQuestCalendarData(userId, "월특근");
+    @GetMapping("/{userId}/leader/{questName}")
+    public ResponseEntity<List<LeaderQuestCalendarResponse>> getMonthlyQuestInfo(@PathVariable String userId , @PathVariable String questName) throws Exception {
+        List<LeaderQuestCalendarResponse> response = leaderQuestService.getQuestCalendarData(userId, questName);
         return ResponseEntity.ok(response);
     }
 
-    // 리더부여 퀘스트 중 "업무개선" 퀘스트 정보 목록 조회
-    @GetMapping("/{userId}/leader/improvement")
-    public ResponseEntity<List<LeaderQuestCalendarResponse>> getImprovementQuestInfo(@PathVariable String userId) throws Exception {
-        List<LeaderQuestCalendarResponse> response = leaderQuestService.getQuestCalendarData(userId, "업무개선");
-        return ResponseEntity.ok(response);
-    }
 
     // 직무별 퀘스트 조회
     @GetMapping("/{userId}/part")
