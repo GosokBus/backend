@@ -19,6 +19,18 @@ configurations {
 	}
 }
 
+configurations.all {
+	resolutionStrategy {
+		force 'com.google.protobuf:protobuf-java:3.21.12'
+	}
+}
+
+configurations {
+	all {
+		exclude group: 'commons-logging', module: 'commons-logging'
+	}
+}
+
 repositories {
 	mavenCentral()
 }
@@ -33,7 +45,7 @@ dependencies {
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
 	// Google Cloud BOM (Bill of Materials)
-	implementation platform('com.google.cloud:libraries-bom:26.33.0')
+	implementation platform('com.google.cloud:libraries-bom:26.16.0')
 
 	// Google Cloud Firestore (BOM에서 버전 관리)
 	implementation 'com.google.cloud:google-cloud-firestore'
@@ -61,6 +73,8 @@ dependencies {
 	implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
 	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
 	runtimeOnly "io.jsonwebtoken:jjwt-jackson:0.11.5"
+
+	// implementation 'com.google.protobuf:protobuf-java:3.24.3'
 }
 
 tasks.named('test') {
