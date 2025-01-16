@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 @Service
 public class FirestoreService {
@@ -29,10 +30,15 @@ public class FirestoreService {
             for (int j = 0; j < row.size(); j++) {
                 documentData.put(headers.get(j).toString(), row.get(j));
             }
-
-            firestore.collection(collectionName)
-                    .document("row" + i)
-                    .set(documentData);
+            if(Objects.equals(collectionName, "userInfo")||Objects.equals(collectionName, "EXP2024")||Objects.equals(collectionName, "post")) {
+                firestore.collection(collectionName)
+                        .document(row.getFirst().toString())
+                        .set(documentData);
+            } else {
+                firestore.collection(collectionName)
+                        .document("row" + i)
+                        .set(documentData);
+            }
         }
     }
 

@@ -32,7 +32,7 @@
       "ranges": [
         {
           "range": "음성1센터1그룹-직무별퀘스트!B13:D65",
-          "collectionName": "1center1group-groupQuestEXP"
+          "collectionName": "음성1센터1그룹-직무별퀘스트"
         }
       ]
     },
@@ -41,7 +41,7 @@
       "ranges": [
         {
           "range": "음성1센터2그룹-직무별퀘스트!B13:D65",
-          "collectionName": "1center2group-groupQuestEXP"
+          "collectionName": "음성1센터2그룹-직무별퀘스트"
         }
       ]
     },
@@ -50,7 +50,7 @@
       "ranges": [
         {
           "range": "음성1센터-리더부여퀘스트!B9:I50",
-          "collectionName": "1center-leaderQuestEXP"
+          "collectionName": "음성1센터-리더부여퀘스트"
         }
       ]
     },
@@ -59,7 +59,7 @@
       "ranges": [
         {
           "range": "음성2센터-리더부여퀘스트!B9:I50",
-          "collectionName": "2center-leaderQuestEXP"
+          "collectionName": "음성2센터-리더부여퀘스트"
         }
       ]
     },
@@ -68,7 +68,7 @@
       "ranges": [
         {
           "range": "전사프로젝트!B7:H12",
-          "collectionName": "companyProject!B7:H12"
+          "collectionName": "companyProject"
         }
       ]
     },
@@ -77,7 +77,7 @@
       "ranges": [
         {
           "range": "게시판!B6:D11",
-          "collectionName": "board"
+          "collectionName": "post"
         }
       ]
     },
@@ -85,7 +85,7 @@
       "spreadsheetId": "1TKfJWX6l2ql2ReHfXYdbp5AXto2eGrTTarCxHW9LniY",
       "ranges": [
         {
-          "range": "올해경험치!B25:L51",
+          "range": "올해경험치!B25:L32",
           "collectionName": "EXP2024"
         }
       ]
