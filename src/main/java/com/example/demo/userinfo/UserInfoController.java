@@ -2,11 +2,14 @@ package com.example.demo.userinfo;
 
 import com.example.demo.userinfo.avatar.AvatarService;
 import com.example.demo.userinfo.avatar.AvatarUpdateRequest;
+import com.example.demo.userinfo.badge.Badge;
+import com.example.demo.userinfo.badge.BadgeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
 
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 @RestController
@@ -14,11 +17,13 @@ public class UserInfoController {
 
     private final UserInfoService userInfoService;
     private final AvatarService avatarService;
+    private final BadgeService badgeService;
 
     @Autowired
-    public UserInfoController(UserInfoService userInfoService, AvatarService avatarService) {
+    public UserInfoController(UserInfoService userInfoService, AvatarService avatarService, BadgeService badgeService) {
         this.userInfoService = userInfoService;
         this.avatarService = avatarService;
+        this.badgeService = badgeService;
     }
 
     //유저 정보 전체 조회
@@ -63,6 +68,9 @@ public class UserInfoController {
             // 아바타 정보 불러오기
             String avatarId = avatarService.getAvatarId(userId);
 
+            // 뱃지 정보 불러오기
+            List<Badge> badges = badgeService.getUserBadges(userId);
+
             // 응답 객체 생성
             UserProfileResponse profileResponse = new UserProfileResponse();
             profileResponse.setUserName(userInfo.getUserName());
@@ -71,6 +79,8 @@ public class UserInfoController {
             profileResponse.setPart(userInfo.getPart());
             profileResponse.setJoinDay(userInfo.getJoinDay());
             profileResponse.setAvatarId(avatarId); // 아바타 ID 추가
+            profileResponse.setBadges(badges);     // 뱃지 정보 추가
+
 
             return ResponseEntity.ok(profileResponse);
         } catch (Exception e) {
