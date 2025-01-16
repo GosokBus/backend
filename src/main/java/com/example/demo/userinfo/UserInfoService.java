@@ -47,4 +47,17 @@ public class UserInfoService {
         System.out.println("Fetched Department: " + department);
         return department;
     }
+
+    //비밀번호 변경
+    public void updatePassword(String userId, String newPassword) throws Exception {
+        // 유저가 존재하는지 확인
+        UserInfo userInfo = userInfoRepository.findById(userId);
+        if (userInfo == null) {
+            throw new Exception("User not found");
+        }
+
+        // 비밀번호 업데이트
+        userInfoRepository.updatePassword(userId, newPassword);
+        System.out.println("Password updated for userId: " + userId);
+    }
 }

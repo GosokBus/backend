@@ -2,9 +2,7 @@ package com.example.demo.userinfo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
 
 import java.util.concurrent.ExecutionException;
@@ -46,4 +44,16 @@ public class UserInfoController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
+
+    //비밀번호 변경
+    @PatchMapping("/user/{userId}/updatePassword")
+    public ResponseEntity<String> updatePassword(@PathVariable String userId, @RequestBody PasswordUpdateRequest passwordUpdateRequest) {
+        try {
+            userInfoService.updatePassword(userId, passwordUpdateRequest.getNewPassword());
+            return ResponseEntity.ok("Password updated successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
 }

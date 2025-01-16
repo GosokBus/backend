@@ -1,6 +1,7 @@
 package com.example.demo.userinfo;
 
 import com.google.cloud.firestore.Firestore;
+import com.google.cloud.firestore.WriteResult;
 import org.springframework.stereotype.Repository;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.DocumentReference;
@@ -41,5 +42,12 @@ public class UserInfoRepository {
         } else {
             return null;
         }
+    }
+
+    public void updatePassword(String userId, String newPassword) throws Exception {
+        DocumentReference docRef = firestore.collection("userInfo").document(userId);
+        ApiFuture<WriteResult> future = docRef.update("기본패스워드", newPassword); // Firestore 필드 업데이트
+        future.get(); // 비동기 작업 완료 대기
+        System.out.println("Password updated successfully for userId: " + userId);
     }
 }
