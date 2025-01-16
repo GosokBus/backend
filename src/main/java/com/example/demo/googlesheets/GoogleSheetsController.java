@@ -1,5 +1,8 @@
 package com.example.demo.googlesheets;
 
+import com.example.demo.userinfo.PasswordUpdateRequest;
+import com.example.demo.userinfo.UserInfo;
+import com.example.demo.userinfo.UserInfoService;
 import lombok.RequiredArgsConstructor;
 import org.checkerframework.framework.qual.RequiresQualifier;
 import org.springframework.http.ResponseEntity;
@@ -14,25 +17,38 @@ import java.util.List;
 public class GoogleSheetsController {
 
     private final GoogleSheetsService googleSheetsService;
+    private final UserInfoService userInfoService;
 
     private static final String SPREADSHEET_ID = "1TKfJWX6l2ql2ReHfXYdbp5AXto2eGrTTarCxHW9LniY"; // 1. 기존에 스프레스 시트id를 복사해둔곳을 여기에 저장해둔다.
-    private static final String RANGE = "연습용2!C11"; // 2. 작성할 행을 입력
+    private static final String RANGE = "구성원정보!I10:I16"; // 2. 작성할 행을 입력
 
-    @PostMapping("/write")
-    public ResponseEntity<String> writeToSheet(@RequestParam String word) {
+    @PostMapping("/profile/{userId}/updatePassword")
+    public ResponseEntity<String> updatePasswordToSheet(@PathVariable String userId, @RequestBody  PasswordUpdateRequest passwordUpdateRequest) {
         try {
-            // 3. 데이터를 스프레드시트에 쓰기 위해 전달되는 형식
-            // 행과 열에 데이터를 매핑하기 위함
-            List<List<Object>> values = List.of(Collections.singletonList(word));
 
-            // 4. 서비스 로직 호출
-            googleSheetsService.writeToSheet(SPREADSHEET_ID, RANGE, values);
+            // 1. userId로 사번 찾기
+            String 사번 = googleSheetsService.findSsnByUserId(SPREADSHEET_ID, "구성원정보!B10:B16", userId);
+            if (사번 == null) {
+                return ResponseEntity.badRequest().body("Invalid userId: " + userId);
+            }
 
-            return ResponseEntity.ok("Data written successfully to the spreadsheet: " + word);
+            // 2. 사번으로 행 계산
+            String range = googleSheetsService.calculatePasswordCellRange(SPREADSHEET_ID, "구성원정보!B10:B16", 사번);
+
+            if (range == null) {
+                return ResponseEntity.badRequest().body("No matching row found for ssn: " + 사번);
+            }
+
+            // 3. 새로운 비밀번호로 업데이트
+            List<List<Object>> values = List.of(Collections.singletonList(passwordUpdateRequest.getNewPassword()));
+            googleSheetsService.writeToSheet(SPREADSHEET_ID, range, values);
+
+            return ResponseEntity.ok("Password updated successfully for userId: " + userId);
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.internalServerError().body("Failed to write data: " + e.getMessage());
+            return ResponseEntity.internalServerError().body("Failed to update password: " + e.getMessage());
         }
+
     }
 
     @GetMapping("/read")
