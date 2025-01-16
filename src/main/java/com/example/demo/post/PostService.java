@@ -58,26 +58,37 @@ public class PostService {
         return getPostById(newId);
     }
 
-    // 모든 게시글 조회
     public List<Post> getAllPosts() throws Exception {
         List<Post> posts = new ArrayList<>();
         ApiFuture<QuerySnapshot> future = firestore.collection("post").get();
         List<QueryDocumentSnapshot> documents = future.get().getDocuments();
         for (QueryDocumentSnapshot document : documents) {
-            posts.add(document.toObject(Post.class));
+            Post post = new Post();
+            post.setId(document.getString("번호")); // 필드 이름 확인
+            post.setTitle(document.getString("제목")); // 필드 이름 확인
+            post.setContent(document.getString("글")); // 필드 이름 확인
+            posts.add(post);
         }
         return posts;
     }
 
-    // 특정 번호의 게시글 조회
+
+
+    // 특정 번호의 게시글 조회 (수동 매핑 적용)
     public Post getPostById(String number) throws Exception {
         DocumentReference docRef = firestore.collection("post").document(number);
         ApiFuture<DocumentSnapshot> future = docRef.get();
         DocumentSnapshot document = future.get();
+
         if (document.exists()) {
-            return document.toObject(Post.class);
+            // 수동으로 Firestore 데이터를 Post 객체에 매핑
+            Post post = new Post();
+            post.setId(document.getString("번호"));     // Firestore의 "번호" 필드 매핑
+            post.setTitle(document.getString("제목")); // Firestore의 "제목" 필드 매핑
+            post.setContent(document.getString("글")); // Firestore의 "글" 필드 매핑
+            return post;
         } else {
-            return null;
+            return null; // 문서가 존재하지 않을 경우 null 반환
         }
     }
 

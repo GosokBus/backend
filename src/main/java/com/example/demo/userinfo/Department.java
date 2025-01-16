@@ -16,12 +16,12 @@ public enum Department {
 
     private final String name;
     private final String leaderQuest;
-    private final String pratQuest;
+    private final String partQuest;
 
-    Department(String name, String leaderQuest, String pratQuest) {
+    Department(String name, String leaderQuest, String partQuest) {
         this.name = name;
         this.leaderQuest = leaderQuest;
-        this.pratQuest = pratQuest;
+        this.partQuest = partQuest;
     }
 
     public static Department fromName(String name) {

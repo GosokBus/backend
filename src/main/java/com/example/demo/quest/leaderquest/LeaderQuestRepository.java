@@ -33,7 +33,7 @@ public class LeaderQuestRepository {
 
             // Achievement 열거형 매핑
             String achievementString = document.getString("달성내용");
-            Achievement achievement = Achievement.fromString(achievementString);
+            LeaderQuestAchievement achievement = LeaderQuestAchievement.fromString(achievementString);
             leaderQuest.setAchievement(achievement != null ? achievement.getLabel() : "Unknown");
 
             leaderQuest.setRewardExp(document.getString("부여 경험치") != null ? document.getString("부여 경험치") : "0");

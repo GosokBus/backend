@@ -1,6 +1,8 @@
 package com.example.demo.userinfo;
 
+
 import com.google.cloud.firestore.*;
+
 import org.springframework.stereotype.Repository;
 import com.google.api.core.ApiFuture;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +42,7 @@ public class UserInfoRepository {
             return null;
         }
     }
+
 
     public UserInfo findByLoginId(String loginId) throws ExecutionException, InterruptedException {
 

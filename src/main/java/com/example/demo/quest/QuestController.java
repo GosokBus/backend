@@ -2,8 +2,10 @@ package com.example.demo.quest;
 
 import com.example.demo.quest.leaderquest.InitialLeaderQuestResponse;
 import com.example.demo.quest.leaderquest.LeaderQuest;
+import com.example.demo.quest.leaderquest.LeaderQuestCalendarResponse;
 import com.example.demo.quest.leaderquest.LeaderQuestService;
 import com.example.demo.quest.partquest.InitialPartQuestResponse;
+import com.example.demo.quest.partquest.PartQuestCalendarResponse;
 import com.example.demo.quest.partquest.PartQuestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,13 +30,6 @@ public class QuestController {
         this.partQuestService = partQuestService;
     }
 
-    // 특정 사용자의 LeaderQuest 목록 조회
-    @GetMapping("/{userId}/leader")
-    public ResponseEntity<List<LeaderQuest>> getLeaderQuestsByUserId(@PathVariable String userId) throws Exception {
-        List<LeaderQuest> leaderQuests = leaderQuestService.getLeaderQuestsByUserId(userId);
-        return new ResponseEntity<>(leaderQuests, HttpStatus.OK);
-    }
-
     // 초기화면 - LeaderQuest와 PartQuest 데이터를 포함
     @GetMapping("/{userId}")
     public ResponseEntity<InitialQuestResponse> getInitialQuestData(@PathVariable String userId) {
@@ -55,4 +50,36 @@ public class QuestController {
         }
     }
 
+    // 특정 사용자의 LeaderQuest 목록 조회
+    @GetMapping("/{userId}/leader")
+    public ResponseEntity<List<LeaderQuest>> getLeaderQuestsByUserId(@PathVariable String userId) throws Exception {
+        List<LeaderQuest> leaderQuests = leaderQuestService.getLeaderQuestsByUserId(userId);
+        return new ResponseEntity<>(leaderQuests, HttpStatus.OK);
+    }
+
+    // 리더부여 퀘스트 중 "월특근" 퀘스트 정보 목록 조회
+    @GetMapping("/{userId}/leader/monthly")
+    public ResponseEntity<List<LeaderQuestCalendarResponse>> getMonthlyQuestInfo(@PathVariable String userId) throws Exception {
+        List<LeaderQuestCalendarResponse> response = leaderQuestService.getQuestCalendarData(userId, "월특근");
+        return ResponseEntity.ok(response);
+    }
+
+    // 리더부여 퀘스트 중 "업무개선" 퀘스트 정보 목록 조회
+    @GetMapping("/{userId}/leader/improvement")
+    public ResponseEntity<List<LeaderQuestCalendarResponse>> getImprovementQuestInfo(@PathVariable String userId) throws Exception {
+        List<LeaderQuestCalendarResponse> response = leaderQuestService.getQuestCalendarData(userId, "업무개선");
+        return ResponseEntity.ok(response);
+    }
+
+    // 직무별 퀘스트 조회
+    @GetMapping("/{userId}/part")
+    public ResponseEntity<List<PartQuestCalendarResponse>> getPartQuests(@PathVariable String userId) {
+        try {
+            List<PartQuestCalendarResponse> partQuests = partQuestService.getAllPartQuests(userId);
+            return ResponseEntity.ok(partQuests);
+        } catch (Exception e) {
+            System.out.println("Error occurred while fetching PartQuests: " + e.getMessage());
+            return ResponseEntity.badRequest().build();
+        }
+    }
 }
