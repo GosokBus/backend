@@ -11,7 +11,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class UserInfo {
 
-    //@DocumentId
+    // @DocumentId
     //@PropertyName("사번")
     private String userId;
     //@PropertyName("이름")

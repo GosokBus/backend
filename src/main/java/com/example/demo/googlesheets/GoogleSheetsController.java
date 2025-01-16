@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.googlesheets;
 
 import lombok.RequiredArgsConstructor;
 import org.checkerframework.framework.qual.RequiresQualifier;
@@ -13,7 +13,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class GoogleSheetsController {
 
-    private final com.example.demo.GoogleSheetsService googleSheetsService;
+    private final GoogleSheetsService googleSheetsService;
 
     private static final String SPREADSHEET_ID = "1TKfJWX6l2ql2ReHfXYdbp5AXto2eGrTTarCxHW9LniY"; // 1. 기존에 스프레스 시트id를 복사해둔곳을 여기에 저장해둔다.
     private static final String RANGE = "연습용2!C11"; // 2. 작성할 행을 입력
