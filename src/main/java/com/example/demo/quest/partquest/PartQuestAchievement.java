@@ -14,6 +14,4 @@ public enum PartQuestAchievement {
         this.standard = standard;
         this.rewardExp = rewardExp;
     }
-
-
 }
