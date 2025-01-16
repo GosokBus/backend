@@ -5,16 +5,21 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import jakarta.annotation.PostConstruct;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.ClassPathResource;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 @Configuration
 public class FirebaseConfig {
     @PostConstruct
     public void firestore() throws IOException {
-        FileInputStream serviceAccount =
-                new FileInputStream("/Users/un6unw/Desktop/backend/src/main/resources/gosock-bus-firebase-adminsdk-mi0c1-269c27d623.json");
+
+        InputStream serviceAccount = new ClassPathResource("gosock-bus-firebase-adminsdk-mi0c1-269c27d623.json").getInputStream();
+
+//        FileInputStream serviceAccount =
+//                new FileInputStream("src/main/resources/gosock-bus-firebase-adminsdk-mi0c1-269c27d623.json");
 
         FirebaseOptions options = new FirebaseOptions.Builder()
                 .setCredentials(GoogleCredentials.fromStream(serviceAccount))

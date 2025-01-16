@@ -1,11 +1,10 @@
 package com.example.demo.userinfo;
 
-import com.google.cloud.firestore.Firestore;
-import com.google.cloud.firestore.WriteResult;
+
+import com.google.cloud.firestore.*;
+
 import org.springframework.stereotype.Repository;
 import com.google.api.core.ApiFuture;
-import com.google.cloud.firestore.DocumentReference;
-import com.google.cloud.firestore.DocumentSnapshot;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.concurrent.ExecutionException;
@@ -44,11 +43,19 @@ public class UserInfoRepository {
         }
     }
 
-    //비밀번호 변경
-    public void updatePassword(String userId, String newPassword) throws Exception {
-        DocumentReference docRef = firestore.collection("userInfo").document(userId);
-        ApiFuture<WriteResult> future = docRef.update("기본패스워드", newPassword); // Firestore 필드 업데이트
-        future.get(); // 비동기 작업 완료 대기
-        System.out.println("Password updated successfully for userId: " + userId);
+
+    public UserInfo findByLoginId(String loginId) throws ExecutionException, InterruptedException {
+
+        CollectionReference collectionRef = firestore.collection("userInfo");
+        Query query = collectionRef.whereEqualTo("아이디", loginId);
+        ApiFuture<QuerySnapshot> querySnapshot = query.get();
+
+
+        if (!querySnapshot.get().isEmpty()) {
+            DocumentSnapshot document = querySnapshot.get().getDocuments().get(0);
+            return document.toObject(UserInfo.class);
+        } else {
+            return null;
+        }
     }
 }
