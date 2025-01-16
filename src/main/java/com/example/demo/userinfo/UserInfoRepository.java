@@ -58,4 +58,12 @@ public class UserInfoRepository {
             return null;
         }
     }
+
+    //비밀번호 변경
+    public void updatePassword(String userId, String newPassword) throws Exception {
+        DocumentReference docRef = firestore.collection("userInfo").document(userId);
+        ApiFuture<WriteResult> future = docRef.update("기본패스워드", newPassword); // Firestore 필드 업데이트
+        future.get(); // 비동기 작업 완료 대기
+        System.out.println("Password updated successfully for userId: " + userId);
+    }
 }

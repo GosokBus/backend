@@ -93,6 +93,7 @@ public class UserInfoController {
     public ResponseEntity<String> updatePassword(@PathVariable String userId, @RequestBody PasswordUpdateRequest passwordUpdateRequest) {
         try {
             userInfoService.updatePassword(userId, passwordUpdateRequest.getNewPassword());
+            System.out.println(userInfoService.getMyInfo(userId).getPassword());
             return ResponseEntity.ok("Password updated successfully");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
