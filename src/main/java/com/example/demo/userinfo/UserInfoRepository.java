@@ -44,6 +44,7 @@ public class UserInfoRepository {
         }
     }
 
+    //비밀번호 변경
     public void updatePassword(String userId, String newPassword) throws Exception {
         DocumentReference docRef = firestore.collection("userInfo").document(userId);
         ApiFuture<WriteResult> future = docRef.update("기본패스워드", newPassword); // Firestore 필드 업데이트
