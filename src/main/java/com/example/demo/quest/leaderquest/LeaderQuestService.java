@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class LeaderQuestService {
@@ -39,15 +40,15 @@ public class LeaderQuestService {
         // "월특근" 퀘스트
         LeaderQuestDto monthlyQuest = new LeaderQuestDto();
         monthlyQuest.setQuestName("월특근");
-        monthlyQuest.setMaxScore(Achievement.MAX_MONTH.getExp());
-        monthlyQuest.setMidScore(Achievement.MEDIAN_MONTH.getExp());
+        monthlyQuest.setMaxScore(LeaderQuestAchievement.MAX_MONTH.getExp());
+        monthlyQuest.setMidScore(LeaderQuestAchievement.MEDIAN_MONTH.getExp());
         conceptualQuests.add(monthlyQuest);
 
         // "업무개선" 퀘스트
         LeaderQuestDto jobImprovementQuest = new LeaderQuestDto();
         jobImprovementQuest.setQuestName("업무개선");
-        jobImprovementQuest.setMaxScore(Achievement.MAX_JOB.getExp());
-        jobImprovementQuest.setMidScore(Achievement.MEDIAN_JOB.getExp());
+        jobImprovementQuest.setMaxScore(LeaderQuestAchievement.MAX_JOB.getExp());
+        jobImprovementQuest.setMidScore(LeaderQuestAchievement.MEDIAN_JOB.getExp());
         conceptualQuests.add(jobImprovementQuest);
 
         // 추가적인 퀘스트를 여기에 정의 가능
@@ -59,5 +60,34 @@ public class LeaderQuestService {
         response.setLeaderQuests(conceptualQuests);
 
         return response;
+    }
+
+    // 특정 퀘스트의 달력 데이터를 반환하는 메서드
+    public List<LeaderQuestCalendarResponse> getQuestCalendarData(String userId, String questName) throws Exception {
+        // 사용자 부서 정보 확인
+        Department department = userInfoService.getDepartById(userId);
+        String collectionName = department.getLeaderQuest();
+
+        // Firestore에서 해당 퀘스트 데이터 조회
+        List<LeaderQuest> quests = leaderQuestRepository.findAllByUserId(userId, collectionName);
+
+        // 해당 퀘스트에 대한 달력 데이터 필터링
+        List<LeaderQuestCalendarResponse> calendarData = quests.stream()
+                .filter(quest -> quest.getQuestName().equalsIgnoreCase(questName)) // 해당 퀘스트 이름 필터링
+                .map(quest -> {
+                    LeaderQuestCalendarResponse response = new LeaderQuestCalendarResponse();
+
+                    // "월" -> "Month", "주" -> "Week" 변환
+                    String translatedTimeType = quest.getMonth() != null ? "Month" : "Week";
+                    String timeValue = quest.getMonth() != null ? quest.getMonth() : quest.getWeek();
+
+                    response.setMonthOrWeek(translatedTimeType); // 변환된 값 설정
+                    response.setTimeValue(timeValue); // 주차/월 정보
+                    response.setAchievement(quest.getAchievement()); // 달성도 정보
+                    return response;
+                })
+                .collect(Collectors.toList());
+
+        return calendarData;
     }
 }

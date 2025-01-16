@@ -36,11 +36,15 @@ public class UserInfoService {
             throw new Exception("User not found");
         }
 
+        System.out.println("Fetched UserInfo: " + userInfo);
+
         Department department = Department.fromName(userInfo.getPart());
         if (department == null) {
+            System.out.println("Department not found for user part: " + userInfo.getPart());
             throw new Exception("Department not found for the user");
         }
 
+        System.out.println("Fetched Department: " + department);
         return department;
     }
 }

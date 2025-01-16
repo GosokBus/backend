@@ -1,5 +1,6 @@
 package com.example.demo.quest.partquest;
 
+import com.example.demo.quest.leaderquest.LeaderQuestCalendarResponse;
 import com.example.demo.userinfo.Department;
 import com.example.demo.userinfo.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,5 +43,20 @@ public class PartQuestService {
         response.setPartQuests(partQuests);
 
         return response;
+    }
+
+    // 직무별 퀘스트 정보 반환
+    public List<PartQuestCalendarResponse> getAllPartQuests(String userId) throws Exception {
+        // 사용자 부서 정보에서 컬렉션 이름 가져오기
+        Department department = userInfoService.getDepartById(userId);
+        String collectionName = department.getPartQuest();
+
+        // Firestore에서 컬렉션의 모든 문서 가져오기
+        List<PartQuestCalendarResponse> partQuests = partQuestRepository.findAll(collectionName);
+        if (partQuests.isEmpty()) {
+            System.out.println("No PartQuest data found for collection: " + collectionName);
+        }
+
+        return partQuests;
     }
 }

@@ -3,7 +3,7 @@ package com.example.demo.quest.leaderquest;
 import lombok.Getter;
 
 @Getter
-public enum Achievement {
+public enum LeaderQuestAchievement {
     MAX_MONTH("Max", 100),
     MEDIAN_MONTH("Median", 50),
     MAX_JOB("Max", 67),
@@ -12,14 +12,14 @@ public enum Achievement {
     private final String label; // 달성도 이름
     private final int exp;      // 경험치 값
 
-    Achievement(String label, int exp) {
+    LeaderQuestAchievement(String label, int exp) {
         this.label = label;
         this.exp = exp;
     }
 
     // 달성도 문자열로 Achievement 찾기
-    public static Achievement fromString(String achievement) {
-        for (Achievement value : Achievement.values()) {
+    public static LeaderQuestAchievement fromString(String achievement) {
+        for (LeaderQuestAchievement value : LeaderQuestAchievement.values()) {
             if (value.label.equalsIgnoreCase(achievement)) {
                 return value;
             }
