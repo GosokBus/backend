@@ -1,6 +1,7 @@
 package com.example.demo.expthisyear;
 
 import com.example.demo.expthisyear.ExpThisYear;
+import com.example.demo.userinfo.Level;
 import com.example.demo.userinfo.UserInfo;
 import com.example.demo.userinfo.UserInfoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,35 +39,96 @@ public class ExpThisYearService {
         }
     }
 
-    //경험치 전체 총합 반환
-    public String getTotalExpThisYear(String userId) throws ExecutionException, InterruptedException {
+    // 전체 경험치와 관련 데이터를 계산하여 반환
+    public ExpResponse getExpDetails(String userId) throws ExecutionException, InterruptedException {
         ExpThisYear expThisYear = expThisYearRepository.findByUserId(userId);
         UserInfo userInfo = userInfoRepository.findById(userId);
 
         if (expThisYear == null || userInfo == null) {
-            return null; // 또는 예외 처리
+            return null;
         }
 
-        try {
-            // expThisYear가 null이 아니므로, getExpThisYear()가 null이면 Firestore 필드가 비어있는 것
-            long expThisYearValue = 0;
-            if (expThisYear.getExpThisYear() != null) {
-                expThisYearValue = Long.parseLong(expThisYear.getExpThisYear().replace(",",""));
-            } else {
-                System.err.println("expThisYear.getExpThisYear() is null for userId: " + userId); // 로그 추가
-            }
-            // 쉼표 제거 후 long타입으로 변환
-            long userInfoTotalExp = Long.parseLong(userInfo.getExpInHave().replace(",", ""));
+        // 올해 획득한 경험치
+        long totalExpThisYear = parseLongOrDefault(expThisYear.getExpThisYear(), 0);
+        // userInfo에 저장된 총 경험치
+        long userTotalExpInInfo = parseLongOrDefault(userInfo.getExpInHave(), 0);
+        // 총 경험치 = userInfo의 총 경험치 + 올해 획득 경험치
+        long totalExp = userTotalExpInInfo + totalExpThisYear;
 
-            return String.valueOf(expThisYearValue + userInfoTotalExp);
+        // 작년까지의 누적 경험치 (총 경험치 - 올해 경험치)
+        long previousYearsTotalExp = totalExp - totalExpThisYear;
+
+        // 현재 레벨 계산
+        Level currentLevel = getCurrentLevel(totalExp);
+        Level nextLevel = getNextLevel(currentLevel);
+
+        // 다음 레벨까지 남은 경험치 계산
+        long nextLevelExp = nextLevel != null ? nextLevel.getRequiredExp() : 0;
+        long remainingExp = nextLevelExp - totalExp;
+
+        // 올해 경험치 max 값
+        long maxExpThisYear = 9000;
+
+        // 현재 경험치 통 및 다음 레벨 통
+        long currentLevelExp = currentLevel.getRequiredExp();
+        long experienceInBucket = totalExp - currentLevelExp;
+        long bucketSize = nextLevelExp - currentLevelExp;
+
+        // 응답 객체 생성
+        ExpResponse response = new ExpResponse();
+        response.setTotalExp(totalExp); // 총 경험치 (userInfo 총경험치 + 올해 경험치)
+        response.setPreviousYearsTotalExp(previousYearsTotalExp); // 작년까지의 누적 경험치
+        response.setPreviousYearsTotalExpMax(currentLevelExp); // 작년까지의 누적 경험치 max 값
+        response.setExpThisYear(totalExpThisYear); // 올해 획득한 경험치
+        response.setExpThisYearMax(maxExpThisYear); // 올해 획득 경험치 max 값
+        response.setNextLevelName(nextLevel != null ? nextLevel.getFirestoreValue() : null); // 다음 레벨 이름 반환
+        response.setRemainingExp(remainingExp > 0 ? remainingExp : 0);
+        response.setBucketSize(bucketSize > 0 ? bucketSize : 0);
+        response.setExperienceInBucket(experienceInBucket);
+
+        return response;
+    }
+
+    // 현재 레벨 계산
+    private Level getCurrentLevel(long totalExp) {
+        Level currentLevel = Level.F1_I; // 초기값 설정
+        for (Level level : Level.values()) {
+            if (totalExp >= level.getRequiredExp()) {
+                currentLevel = level;
+            } else {
+                break;
+            }
+        }
+        return currentLevel;
+    }
+
+    // 안전한 Long 파싱
+    private long parseLongOrDefault(String value, long defaultValue) {
+        try {
+            return Long.parseLong(value.replace(",", ""));
         } catch (NumberFormatException e) {
-            // 2024년 획득한 총 경험치 또는 총경험치 필드가 숫자로 변환할 수 없는 문자열인 경우 예외 처리
-            System.err.println("Error parsing expThisYear or totalExp for userId: " + userId + ", error: " + e.getMessage());
-            System.err.println("expThisYear.getExpThisYear(): " + expThisYear.getExpThisYear());
-            System.err.println("userInfo.getExpInHave(): " + userInfo.getExpInHave());
-            return null; // 또는 예외 처리
+            return defaultValue;
         }
     }
+
+    // 다음 레벨 계산
+    private Level getNextLevel(Level currentLevel) {
+        Level[] levels = Level.values();
+        int currentIndex = -1;
+
+        for (int i = 0; i < levels.length; i++) {
+            if (levels[i] == currentLevel) {
+                currentIndex = i;
+                break;
+            }
+        }
+
+        if (currentIndex != -1 && currentIndex < levels.length - 1) {
+            return levels[currentIndex + 1]; // 다음 레벨 반환
+        }
+        return null; // 다음 레벨이 없는 경우
+    }
+
 
 
 }

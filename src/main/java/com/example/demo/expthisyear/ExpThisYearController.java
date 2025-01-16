@@ -28,17 +28,18 @@ public class ExpThisYearController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
-    //전체 획득한 경험치량 반환
-    @GetMapping("/{userId}/total")
-    public ResponseEntity<String> getTotalExpThisYear(@PathVariable String userId) {
+
+    // 전체 경험치 및 레벨 관련 정보 반환
+    @GetMapping("/{userId}/expDetails")
+    public ResponseEntity<ExpResponse> getExpDetails(@PathVariable String userId) {
         try {
-            String totalExpThisYear = expThisYearService.getTotalExpThisYear(userId);
-            if (totalExpThisYear == null) {
+            ExpResponse response = expThisYearService.getExpDetails(userId);
+
+            if (response == null) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
             }
-            return ResponseEntity.ok(totalExpThisYear);
+            return ResponseEntity.ok(response);
         } catch (Exception e) {
-            // 예외 처리
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
