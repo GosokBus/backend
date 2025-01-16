@@ -43,8 +43,8 @@ public class UserInfoRepository {
 
     public UserInfo findByLoginId(String loginId) throws ExecutionException, InterruptedException {
 
-        Query query = firestore.collection("userInfo").whereEqualTo("loginId", loginId);
-
+        CollectionReference collectionRef = firestore.collection("userInfo");
+        Query query = collectionRef.whereEqualTo("아이디", loginId);
         ApiFuture<QuerySnapshot> querySnapshot = query.get();
 
 

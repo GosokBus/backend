@@ -38,8 +38,6 @@ public class LoginController {
         String accessToken = jwtTokenProvider.createAccessToken(userInfo.getUserId(), userInfo.getUserName());
         String refreshToken = jwtTokenProvider.createRefreshToken(userInfo.getUserId(), userInfo.getUserName());
 
-        System.out.println(refreshToken);
-
 
 
         RefreshToken existingToken = refreshTokenRepository.findByUserId(userInfo.getUserId());
