@@ -49,7 +49,7 @@ public class LoginController {
         }
 
 
-        return ResponseEntity.ok(new TokenDTO(accessToken, refreshToken));
+        return ResponseEntity.ok(new TokenDTO(accessToken, refreshToken, userInfo.getUserId()));
     }
 
     @PostMapping("/refresh")
@@ -80,7 +80,7 @@ public class LoginController {
         refreshTokenRepository.save(savedRefreshToken);
 
         // 새로운 access 토큰과 refresh 토큰 전달
-        return ResponseEntity.ok(new TokenDTO(newAccessToken, newRefreshToken));
+        return ResponseEntity.ok(new TokenDTO(newAccessToken, newRefreshToken, userInfo.getUserId()));
     }
 
 }

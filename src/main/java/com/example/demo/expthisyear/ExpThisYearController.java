@@ -16,7 +16,7 @@ public class ExpThisYearController {
     private ExpThisYearService expThisYearService;
 
     //올해 획득한 경험치량 반환
-    @GetMapping("/{userId}/thisyear")
+    @GetMapping("/{userId}/thisYear")
     public ResponseEntity<String> getExpThisYear(@PathVariable String userId) {
         try {
             String expThisYear = expThisYearService.getExpThisYear(userId);
