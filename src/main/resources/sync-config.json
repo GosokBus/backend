@@ -1,0 +1,94 @@
+{
+  "sheets": [
+    {
+      "spreadsheetId": "1TKfJWX6l2ql2ReHfXYdbp5AXto2eGrTTarCxHW9LniY",
+      "ranges": [
+        {
+          "range": "구성원정보!B9:J16",
+          "collectionName": "userInfo"
+        }
+      ]
+    },
+    {
+      "spreadsheetId": "1TKfJWX6l2ql2ReHfXYdbp5AXto2eGrTTarCxHW9LniY",
+      "ranges": [
+        {
+          "range": "인사평가!B9:F34",
+          "collectionName": "firstPersonnelEvaluation"
+        }
+      ]
+    },
+    {
+      "spreadsheetId": "1TKfJWX6l2ql2ReHfXYdbp5AXto2eGrTTarCxHW9LniY",
+      "ranges": [
+        {
+          "range": "인사평가!H9:K16",
+          "collectionName": "secondPersonnelEvaluation"
+        }
+      ]
+    },
+    {
+      "spreadsheetId": "1TKfJWX6l2ql2ReHfXYdbp5AXto2eGrTTarCxHW9LniY",
+      "ranges": [
+        {
+          "range": "음성1센터1그룹-직무별퀘스트!B13:D65",
+          "collectionName": "음성1센터1그룹-직무별퀘스트"
+        }
+      ]
+    },
+    {
+      "spreadsheetId": "1TKfJWX6l2ql2ReHfXYdbp5AXto2eGrTTarCxHW9LniY",
+      "ranges": [
+        {
+          "range": "음성1센터2그룹-직무별퀘스트!B13:D65",
+          "collectionName": "음성1센터2그룹-직무별퀘스트"
+        }
+      ]
+    },
+    {
+      "spreadsheetId": "1TKfJWX6l2ql2ReHfXYdbp5AXto2eGrTTarCxHW9LniY",
+      "ranges": [
+        {
+          "range": "음성1센터-리더부여퀘스트!B9:I50",
+          "collectionName": "음성1센터-리더부여퀘스트"
+        }
+      ]
+    },
+    {
+      "spreadsheetId": "1TKfJWX6l2ql2ReHfXYdbp5AXto2eGrTTarCxHW9LniY",
+      "ranges": [
+        {
+          "range": "음성2센터-리더부여퀘스트!B9:I50",
+          "collectionName": "음성2센터-리더부여퀘스트"
+        }
+      ]
+    },
+    {
+      "spreadsheetId": "1TKfJWX6l2ql2ReHfXYdbp5AXto2eGrTTarCxHW9LniY",
+      "ranges": [
+        {
+          "range": "전사프로젝트!B7:H12",
+          "collectionName": "companyProject"
+        }
+      ]
+    },
+    {
+      "spreadsheetId": "1TKfJWX6l2ql2ReHfXYdbp5AXto2eGrTTarCxHW9LniY",
+      "ranges": [
+        {
+          "range": "게시판!B6:D11",
+          "collectionName": "post"
+        }
+      ]
+    },
+    {
+      "spreadsheetId": "1TKfJWX6l2ql2ReHfXYdbp5AXto2eGrTTarCxHW9LniY",
+      "ranges": [
+        {
+          "range": "올해경험치!B25:L32",
+          "collectionName": "EXP2024"
+        }
+      ]
+    }
+  ]
+}
