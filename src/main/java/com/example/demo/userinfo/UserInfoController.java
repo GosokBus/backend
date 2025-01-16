@@ -28,19 +28,29 @@ public class UserInfoController {
 
     //유저 정보 전체 조회
     @GetMapping("/user/{userId}")
-    public ResponseEntity<UserInfo> getMyInfo(@PathVariable String userId) throws ExecutionException, InterruptedException {
+    public ResponseEntity<UserInfoWithBadges> getMyInfo(@PathVariable String userId) throws ExecutionException, InterruptedException {
         UserInfo userInfo = userInfoService.getMyInfo(userId);
         if (userInfo == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
 
-        // userInfo.get레벨()은 Level Enum 타입
-        if (userInfo.getLevel() != null) {
-            System.out.println("Level (Firestore Value): " + userInfo.getLevel().getFirestoreValue());
-            System.out.println("Level (Enum Name): " + userInfo.getLevel().name());
-        }
+        try {
+            // 뱃지 가져오기 (status가 true인 것을 우선, 부족하면 false 추가)
+            List<Badge> topThreeBadges = badgeService.getTopThreeBadges(userId);
 
-        return ResponseEntity.ok(userInfo);
+            // 응답 객체 생성
+            UserInfoWithBadges response = new UserInfoWithBadges();
+            response.setUserName(userInfo.getUserName());
+            response.setLevel(userInfo.getLevel().getFirestoreValue());
+            response.setUserId(userInfo.getUserId());
+            response.setPart(userInfo.getPart());
+            response.setJoinDay(userInfo.getJoinDay());
+            response.setBadges(topThreeBadges); // 상위 3개의 뱃지 추가
+
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
     }
 
     //유저의 총 경험치 필드 조회
