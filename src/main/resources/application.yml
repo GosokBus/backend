@@ -1,7 +1,17 @@
+server:
+  address: 0.0.0.0
+
 spring:
-  # DB ?? ?? ??
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/dohands
-    username: root
-    password: js365@dwy5
+  cloud:
+    gcp:
+      project-id: gosock-bus
+google:
+  apis:
+    sheets:
+      credentials-file: /Users/imjaehyeon/Desktop/3-2/spring/blaybus/GosokbusCRUD4/src/main/resources/gosokbus-2c0f02299f05.json
+      spreadsheet-id: 1TKfJWX6l2ql2ReHfXYdbp5AXto2eGrTTarCxHW9LniY
+
+jwt:
+  secret: ${JWT_SECRET_KEY}  # 환경 변수에서 가져옴
+  access-token-validity-in-ms: 1800000    # 30분
+  refresh-token-validity-in-ms: 604800000  # 7일
