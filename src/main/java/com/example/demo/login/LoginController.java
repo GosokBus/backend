@@ -29,9 +29,9 @@ public class LoginController {
     @PostMapping("/login")
     public ResponseEntity<TokenDTO> login(@Valid @RequestBody LoginRequestDTO loginRequest, HttpServletRequest request) throws ExecutionException, InterruptedException {
 
-        UserInfo userInfo = userInfoService.findByLoginId(loginRequest.getLoginId());
+        UserInfo userInfo = userInfoService.login(loginRequest);
 
-        if(userInfo == null) {
+        if(userInfo == null || !userInfo.getPassword().equals(loginRequest.getPassword())) {
             throw new IllegalArgumentException("아이디 혹은 비밀번호가 일치하지 않습니다.");
         }
 

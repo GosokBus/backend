@@ -1,5 +1,6 @@
 package com.example.demo.userinfo;
 
+import com.example.demo.login.LoginRequestDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -49,11 +50,27 @@ public class UserInfoService {
     }
 
 
-    public UserInfo findByLoginId(String loginId) throws ExecutionException, InterruptedException {
-        UserInfo userInfo = userInfoRepository.findByLoginId(loginId);
+    public UserInfo login(LoginRequestDTO loginRequest) throws ExecutionException, InterruptedException {
+        UserInfo userInfo = userInfoRepository.login(loginRequest.getLoginId());
+
+        System.out.println(userInfo.getUserId());
+        System.out.println(userInfo.getUserName());
+        System.out.println(userInfo.getLoginId());
+        System.out.println(userInfo.getLevel());
+        System.out.println(userInfo.getExpInHave());
+        System.out.println(userInfo.getGroup());
+        System.out.println(userInfo.getPart());
+        System.out.println(userInfo.getJoinDay());
+        System.out.println(userInfo.getPassword());
+
         if (userInfo == null) {
             return null; // 또는 예외 처리
         }
+
+        if(!userInfo.getPassword().equals(loginRequest.getPassword())) {
+            return null;
+        }
+
         return userInfo;
     }
 

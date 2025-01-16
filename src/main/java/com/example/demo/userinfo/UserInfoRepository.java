@@ -44,16 +44,29 @@ public class UserInfoRepository {
     }
 
 
-    public UserInfo findByLoginId(String loginId) throws ExecutionException, InterruptedException {
+    public UserInfo login(String loginId) throws ExecutionException, InterruptedException {
 
         CollectionReference collectionRef = firestore.collection("userInfo");
         Query query = collectionRef.whereEqualTo("아이디", loginId);
         ApiFuture<QuerySnapshot> querySnapshot = query.get();
 
 
+
         if (!querySnapshot.get().isEmpty()) {
-            DocumentSnapshot document = querySnapshot.get().getDocuments().get(0);
-            return document.toObject(UserInfo.class);
+            UserInfo userInfo = new UserInfo();
+            for (QueryDocumentSnapshot document : querySnapshot.get().getDocuments()) {
+                userInfo.setLoginId(document.getString("아이디"));
+                userInfo.setUserName(document.getString("이름"));
+                userInfo.setUserId(document.getString("사번"));
+                userInfo.setPart(document.getString("소속"));
+                userInfo.setLevel(Level.fromFirestoreValue(document.getString("레벨")));
+                userInfo.setPassword(document.getString("기본패스워드"));
+                userInfo.setJoinDay(document.getString("입사일"));
+                userInfo.setGroup(document.getString("직무그룹"));
+                userInfo.setExpInHave(document.getString("총경험치"));
+            }
+
+            return userInfo;
         } else {
             return null;
         }
