@@ -62,4 +62,31 @@ public class PartQuestRepository {
         }
         return "Unknown"; // 해당하지 않는 경우
     }
+
+    // Firestore에서 모든 직무별 퀘스트 조회 (PartQuest 타입)
+    public List<PartQuest> findAllAsPartQuest(String collectionName) throws Exception {
+        List<PartQuest> partQuests = new ArrayList<>();
+        System.out.println("Querying Firestore collection for PartQuest: " + collectionName);
+
+        ApiFuture<QuerySnapshot> future = firestore.collection(collectionName).get(); // 조건 없이 모든 문서 가져오기
+        List<QueryDocumentSnapshot> documents = future.get().getDocuments();
+
+        if (documents.isEmpty()) {
+            System.out.println("No documents found in collection: " + collectionName);
+            return partQuests;
+        }
+
+        for (QueryDocumentSnapshot document : documents) {
+            // 수동 매핑
+            PartQuest partQuest = new PartQuest();
+            partQuest.setRewardExp(document.getString("부여 경험치")); // 보상 경험치
+            partQuest.setWeek(document.getString("주차")); // 주차 정보
+            partQuest.setNote(document.getString("비고")); // 비고 정보
+
+            System.out.println("Fetched document: " + document.getData());
+            partQuests.add(partQuest);
+        }
+
+        return partQuests;
+    }
 }

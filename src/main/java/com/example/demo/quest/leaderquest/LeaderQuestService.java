@@ -90,4 +90,37 @@ public class LeaderQuestService {
 
         return calendarData;
     }
+
+    // 리더부여퀘스트 데이터 응답
+    public List<LeaderQuestResponse> getLeaderQuestDetails(String userId) throws Exception {
+        // 사용자 부서 정보 확인
+        Department department = userInfoService.getDepartById(userId);
+        String collectionName = department.getLeaderQuest();
+
+        // Firestore에서 해당 유저의 리더부여퀘스트 데이터 조회
+        List<LeaderQuest> quests = leaderQuestRepository.findAllByUserId(userId, collectionName);
+
+        // 응답 데이터를 담을 리스트
+        List<LeaderQuestResponse> responses = new ArrayList<>();
+
+        // 퀘스트 데이터를 변환하여 응답 리스트에 추가
+        for (LeaderQuest quest : quests) {
+            LeaderQuestResponse response = new LeaderQuestResponse();
+            response.setQuestName(quest.getQuestName()); // 퀘스트 이름
+            response.setRewardExp(quest.getRewardExp()); // 보상 경험치
+
+            // 월 또는 주 정보 설정
+            if (quest.getMonth() != null) {
+                response.setTimeType("Month");
+                response.setTimeValue(quest.getMonth());
+            } else if (quest.getWeek() != null) {
+                response.setTimeType("Week");
+                response.setTimeValue(quest.getWeek());
+            }
+
+            responses.add(response);
+        }
+
+        return responses;
+    }
 }

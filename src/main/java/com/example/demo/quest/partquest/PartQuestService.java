@@ -59,4 +59,37 @@ public class PartQuestService {
 
         return partQuests;
     }
+
+    // 부여 경험치가 0 이상인 직무별 퀘스트 데이터만 반환
+    public List<PartQuestResponse> getFilteredPartQuests(String userId) throws Exception {
+        // 사용자 부서 정보에서 컬렉션 이름 가져오기
+        Department department = userInfoService.getDepartById(userId);
+        String collectionName = department.getPartQuest();
+
+        // Firestore에서 컬렉션의 모든 문서 가져오기
+        List<PartQuest> allPartQuests = partQuestRepository.findAllAsPartQuest(collectionName);
+
+        // 응답 데이터를 담을 리스트
+        List<PartQuestResponse> responses = new ArrayList<>();
+
+        // 필터링 및 변환
+        for (PartQuest quest : allPartQuests) {
+            try {
+                int rewardExp = Integer.parseInt(String.valueOf(quest.getRewardExp()));
+                if (rewardExp > 0) {
+                    PartQuestResponse response = new PartQuestResponse();
+                    response.setQuestName("직무별 퀘스트"); // 퀘스트 이름
+                    response.setRewardExp(rewardExp); // 보상 경험치
+                    response.setWeek(quest.getWeek()); // 주차 정보
+
+                    responses.add(response);
+                }
+            } catch (NumberFormatException | NullPointerException e) {
+                System.err.println("Error parsing rewardExp for quest: " + quest.getRewardExp());
+            }
+        }
+
+        return responses;
+    }
+
 }
