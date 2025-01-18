@@ -1,6 +1,6 @@
 package com.example.demo.firestore;
 
-import com.example.demo.GoogleSheetsService;
+import com.example.demo.googlesheets.GoogleSheetsService;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;

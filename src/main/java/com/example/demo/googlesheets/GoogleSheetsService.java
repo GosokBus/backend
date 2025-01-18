@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.googlesheets;
 
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.json.JsonFactory;
@@ -72,4 +72,41 @@ public class GoogleSheetsService {
             throw new RuntimeException("Failed to read data: " + e.getMessage(), e);
         }
     }
+
+    // 사번 찾기
+    public String findSsnByUserId(String spreadsheetId, String range, String userId) throws Exception {
+        Sheets service = getSheetsService();
+        ValueRange response = service.spreadsheets().values().get(spreadsheetId, range).execute();
+        List<List<Object>> values = response.getValues();
+
+        if (values != null) {
+            for (int i = 0; i < values.size(); i++) {
+                if (values.get(i).get(0).toString().equals(userId)) {
+                    // 해당 행에서 사번 반환
+                    return (String) values.get(i).get(0); // 이 값을 G 열에서 계산하는 로직으로 수정 가능
+                }
+            }
+        }
+        return null; // 매칭되는 사번이 없으면 null 반환
+    }
+
+    // 행 계산
+    public String calculatePasswordCellRange(String spreadsheetId, String range, String 사번) throws Exception {
+        Sheets service = getSheetsService();
+        ValueRange response = service.spreadsheets().values().get(spreadsheetId, range).execute();
+        List<List<Object>> values = response.getValues();
+
+        if (values != null) {
+            for (int i = 0; i < values.size(); i++) {
+                if (values.get(i).get(0).toString().equals(사번)) {
+                    // "I 열"은 기본패스워드 열, 행 번호는 i + 시작 행 번호
+                    int rowNumber = 10 + i;
+                    return "구성원정보!I" + rowNumber;
+                }
+            }
+        }
+        return null; // 매칭되는 행이 없으면 null 반환
+    }
+
+
 }
