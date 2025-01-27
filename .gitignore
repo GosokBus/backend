@@ -38,3 +38,6 @@ out/
 
 ### .json ###
 src/main/resources/*.json
+
+.env
+docker-compose.yml

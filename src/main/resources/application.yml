@@ -8,8 +8,8 @@ spring:
 google:
   apis:
     sheets:
-      credentials-file: /Users/imjaehyeon/Desktop/3-2/spring/blaybus/GosokbusCRUD4/src/main/resources/gosokbus-2c0f02299f05.json
-      spreadsheet-id: 1TKfJWX6l2ql2ReHfXYdbp5AXto2eGrTTarCxHW9LniY
+      credentials-file: ${GOOGLE_CREDENTIALS_FILE_PATH}
+      spreadsheet-id: ${GOOGLE_SPREADSHEET_ID}
 
 jwt:
   secret: ${JWT_SECRET_KEY}  # 환경 변수에서 가져옴

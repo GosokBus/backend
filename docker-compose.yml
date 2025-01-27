@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  springboot-app:
+    image: dohands
+    container_name: springboot-cont
+    ports:
+      - "8080:8080"
+    environment:
+      - GOOGLE_APPLICATION_CREDENTIALS=/app/config/firebase-service-account.json
+      - JWT_SECRET_KEY=cGlhbm9jb21wdXRlcm5vdGVib29rYWlycG90YXNkcXdlenhjYXNkcXdlenhj
+    volumes:
+      - ./src/main/resources/gosokbus-2c0f02299f05.json:/app/config/firebase-service-account.json
